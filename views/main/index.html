@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../public/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>welcome 227！！！</h1>
+    {% if userInfo._id %}
+    <div>
+        <h1>用户信息</h1>
+        <p><span>{{userInfo.username}}</span></p>
+        {% if userInfo.isAdmin %}
+        <p><span>你好，管理员</span></p>
+        <p><span><a href="/admin">进入管理模块</a></span></p>
+        {% else %}
+        <p><span>你好，欢迎光临博客</span></p>
+        {%endif%}
+        <form action="/api/user/logout" method="get">
+            <input type="submit" value="登出"></input>
+        </form>
+        <div>
+            {%for content in contents%}
+            <div>
+                <h1>{{content.title}}</h1>
+                <p>
+                    作者: <span>{{content.user.username}}</span>
+                    时间: <span>{{content.addTime.toLocaleString()}}</span>
+                    阅读: <span>{{content.views}}</span>
+                    评论: <span>10</span>
+                </p>
+                <textarea>{{content.description}}</textarea>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    {% else %}
+    <h1>登陆</h1>
+    <form action="/api/user/login" method="post">
+
+        <input type="text" name="username">
+        <input type="text" name="password">
+        <input type="submit" value="提交"></input>
+
+    </form>
+    <h1>注册</h1>
+    <form action="/api/user/register" method="post">
+
+        <input type="text" name="username">
+        <input type="text" name="password">
+        <input type="text" name="repassword">
+        <input type="submit" value="提交"></input>
+
+    </form>
+    {% endif %}
+
+</body>
+</html>
